@@ -1,6 +1,4 @@
 <?php
-require "map_viewer.php";
-
 class Wall
 {
 	var $points = array();
@@ -298,6 +296,4 @@ imagedestroy($img);
 
 //	load image file onto webpage
 echo '<img src="./image.png" />';
-
-MapViewer("", $map);
 ?>
