@@ -33,7 +33,9 @@ $stroke = 2;	//	the thickness of the walls
 $factor = 1.15;	//	similar to size_factor
 
 //$arrow = array(-5,0, -5,20, -15,20, 0,40, 15,20 ,5,20, 5,0);
-$arrow = array(15,0, 15,20, 5,20, 20,40, 35,20 ,25,20, 25,0);
+//$arrow = array(15,0, 15,20, 5,20, 20,40, 35,20 ,25,20, 25,0);
+$arrowR = array(7, 8, 2, 10.2801098892805, 10.2801098892805, 2, 8);
+$arrowA = array(0, 270, 270, 195.94539590092, 164.05460409908, 90, 90);
 
 $wallList = array();
 $zoneList = array();
@@ -257,32 +259,41 @@ if (count($spawnList) > 0)
 
             $angle = 360 - $angle + 90;
 
-            $xSpots = $ySpots = array();
-
-            //	let's get to work
-            for($i = 0; $i < count($arrow); $i++)
+			$arrow = array();
+            for($i = 0; $i < 7; $i++)
             {
-                //$arrow[] = $x + (($arrows[$i] * 0.4));
-                //$arrow[] = $y + (($arrows[$i + 1] * 0.4)) - 8;
-
-                $newX = $arrow[$i] * 0.4;
-                $newY = $arrow[$i + 1] * 0.4;
-
-                $spawnPoints[] = $newX;
-                $spawnPoints[] = $newY;
-
-                $xSpots[] = $newX;
-                $ySpots[] = $newY;
-
-                $i += 1;
+                array_push($arrow, $x + $arrowR[$i] * cos(deg2rad($arrowA[$i] + $angle)), $y + $arrowR[$i] * sin(deg2rad($arrowA[$i] + $angle)));
             }
-
-            //	finally draw the spawn shaped arrow
+            imagefilledpolygon($img,$arrow,7,"0x00ff0000");
+			
+			//	let's get to work
+			/*
+            for($i = 0; $i < count($arrow); $i++)
+			{
+				//$arrow[] = $x + (($arrows[$i] * 0.4));
+				//$arrow[] = $y + (($arrows[$i + 1] * 0.4)) - 8;
+				
+				$newX = $arrow[$i] * 0.4;
+				$newY = $arrow[$i + 1] * 0.4;
+				
+				$spawnPoints[] = $newX;
+				$spawnPoints[] = $newY;
+				
+				$xSpots[] = $newX;
+				$ySpots[] = $newY;
+				
+				$i += 1;
+			}
+			
+			//	finally draw the spawn shaped arrow
+            
+			
             $spawnArrow = imagecreatetruecolor(max($xSpots), max($ySpots));
-            imagefilledpolygon($spawnArrow, $spawnPoints, count($spawnPoints) / 2, "0x00ff0000");
-            $spawnArrow = imagerotate($spawnArrow, $angle, 0);
-            imagecopymerge($img, $spawnArrow, $x, $y, 0, 0, max($xSpots) + 6, max($ySpots), 300);
-            imagedestroy($spawnArrow);
+			imagefilledpolygon($spawnArrow, $spawnPoints, count($spawnPoints) / 2, "0x00ff0000");
+			$spawnArrow = imagerotate($spawnArrow, $angle, 0);
+			imagecopymerge($img, $spawnArrow, $x, $y, 0, 0, max($xSpots) + 6, max($ySpots), 300);
+			imagedestroy($spawnArrow);
+            */
         }
     }
 }
